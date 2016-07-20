@@ -1,0 +1,85 @@
+<#include "/admin/_layout.html"/>
+<@layout>
+
+<#include "/admin/_header.html"/>
+
+<div class="ui container course-main">
+    <div class="ui breadcrumb" style="padding-bottom: 30px;">
+        <a class="section">首页</a>
+        <i class="right angle icon divider"></i>
+        <div class="active section">科目</div>
+    </div>
+
+    <div class="container ui">
+        <button class="ui labeled icon button green" onclick="addSubjectModal()"><i class="plus icon"></i> 添加</button>
+    </div>
+    <table class="ui celled table">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>名称</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <#list subjects as subject>
+        <tr>
+            <td>${subject.id}</td>
+            <td>${subject.name}</td>
+            <td>
+                <div class="ui buttons">
+                    <button class="ui orange basic button" onclick="editSubjectModal('${subject.id}','${subject.name}')"><i class="right edit icon"></i> 编辑</button>
+                    <button class="ui red basic button" onclick="deleteSubjectModal('${subject.id}')"><i class="right remove icon"></i> 删除</button>
+                </div>
+            </td>
+        </tr>
+        </#list>
+        </tbody>
+    </table>
+</div>
+<!--添加科目-->
+<div class="ui modal" id="handleSubjectModal">
+    <i class="close icon"></i>
+    <div class="header">
+        添加科目
+    </div>
+    <div class="content">
+        <form class="ui form">
+            <div class="field">
+                <label>科目名称</label>
+                <input type="text" name="name" id="subject_name" placeholder="请输入科目名称">
+                <input type="hidden" name="id" id="subject_id">
+            </div>
+            <div class="ui positive right labeled icon button" onclick="handleSubject()">
+                保 存  <i class="checkmark icon"></i>
+            </div>
+            <!--<button class="ui button" type="submit">Submit</button>-->
+        </form>
+    </div>
+</div>
+
+<!--删除科目-->
+<div class="ui modal" id="deleteSubjectModal">
+    <i class="close icon"></i>
+    <div class="header">
+        删除科目
+    </div>
+    <div class="image content">
+
+        <div class="description">
+            <div class="ui header"> 您确定要删除该科目吗?</div>
+            <p>数据一旦删除将不可恢复, 请您慎重操作.</p>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            取消
+        </div>
+        <div class="ui positive right labeled icon button" onclick="deleteSubject()">
+            确定删除
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>
+
+</@layout>

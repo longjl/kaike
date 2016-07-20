@@ -1,0 +1,79 @@
+/*******************************
+            course
+*******************************/
+
+.logo {
+    background: url("https://dao.jisuanke.com/dao/img/logo.svg") no-repeat;
+    height: 40px;
+    width: 245px;
+    /*margin-top: 20px;*/
+}
+
+.course-main{
+    padding-top: 8em;
+    padding-bottom: 3em;
+}
+
+.ui.menu {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 1rem 0;
+    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+    background: #FFF;
+    font-weight: 400;
+     border: 0px solid rgba(34,36,38,.15);
+    box-shadow: 0 3px 5px rgba(0,0,0,.05);
+    border-radius: .28571429rem;
+    min-height: 2.85714286em;
+}
+
+.ui.menu .item:before {
+    position: absolute;
+    content: '';
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 0px;
+    background: rgba(34,36,38,.1);
+}
+
+.ui.footer.segment {
+    margin: 5em 0em 0em;
+    padding: 5em 0em;
+}
+
+
+.ui.vertical.stripe p {
+    font-size: 1.2em;
+}
+.ui.header + p {
+    margin-top: 0em;
+}
+p {
+    margin: 0em 0em 1em;
+    line-height: 1.4285em;
+}
+
+.ui.vertical.stripe h3 {
+    font-size: 2em;
+}
+
+.ui.header:first-child {
+    margin-top: -0.14285em;
+}
+h3.ui.header {
+    font-size: 1.28rem;
+}
+.ui.header {
+    border: none;
+    margin: calc(2rem - 0.14285em ) 0em 1rem;
+    padding: 0em 0em;
+    font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    line-height: 1.2857em;
+    text-transform: none;
+    color: rgba(0, 0, 0, 0.87);
+}
+
