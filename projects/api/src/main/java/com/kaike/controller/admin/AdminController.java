@@ -1,4 +1,4 @@
-package com.kaike.controller;
+package com.kaike.controller.admin;
 
 import com.jfinal.core.Controller;
 

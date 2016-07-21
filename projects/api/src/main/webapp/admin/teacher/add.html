@@ -1,0 +1,309 @@
+<#include "/admin/_layout.html"/>
+<@layout>
+
+<#include "/admin/_header.html"/>
+<div class="ui container course-main">
+    <div class="ui breadcrumb" style="padding-bottom: 30px;">
+        <a class="section">首页</a>
+        <i class="right angle icon divider"></i>
+        <a class="section">老师</a>
+        <i class="right angle icon divider"></i>
+        <div class="active section">添加</div>
+    </div>
+
+    <table class="ui celled striped table form">
+        <thead>
+        <tr>
+            <th colspan="2">
+                添加老师
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="collapsing">
+                名字
+            </td>
+            <td><input type="text" id="name" name="name" placeholder="请输入老师名字 (必填)"></td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                资历
+            </td>
+            <td><input type="text" id="qualifications" name="qualifications" placeholder="请输入老师资历 (如: 北京大学法学院博士,8年辅导经验) 必填"></td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                介绍
+            </td>
+            <td>
+                <div class="field">
+                    <textarea id="desc" name="desc" placeholder="请输入老师介绍 (选填)"></textarea>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                头像
+            </td>
+            <td>
+                <div class="inline fields">
+                    <div class="field">
+                        <img id="img_avatar" class="ui medium bordered image"
+                             src="/assets/images/wireframe/white-image.png">
+                        <input type="text" id="avatar" name="avatar" style="display: none;">
+                    </div>
+                    <div class="field" id="avatar_container">
+                        <div class="ui ignored warning icon message" style="display: block;">
+                            <div class="content">
+                                头像尺寸300px * 300px,图片大小限制2MB,图片格式仅限jpeg,jpg,gif,png
+                            </div>
+                        </div>
+                        <table class="ui compact celled  table">
+                            <thead>
+                            <tr>
+                                <th>图片名称</th>
+                                <th>图片大小</th>
+                                <th>上传进度</th>
+                            </tr>
+                            </thead>
+                            <tbody id="avatar_tbody">
+                            <tr >
+                                <td></td>
+                                <td></td>
+                                <td>0 %</td>
+                            </tr>
+                            </tbody>
+                            <tfoot class="full-width">
+                            <tr>
+                                <th colspan="4">
+                                    <div id="avatarFiles" class="ui icon button orange">
+                                        选择上传头像
+                                    </div>
+                                    <div id="avatarUploadFiles" class="ui icon button green">
+                                        <i class="cloud upload icon"></i> 开始上传
+                                    </div>
+                                </th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                微信二维码
+            </td>
+            <td>
+                <div class="inline fields">
+                    <div class="field">
+                        <img id="img_weixin" class="ui medium bordered image" src="/assets/images/wireframe/white-image.png">
+                        <input type="text" id="weixin" name="weixin" style="display: none;">
+                    </div>
+                    <div class="field" id="weixin_container">
+                        <div class="ui ignored warning icon message" style="display: block;">
+                            <div class="content">
+                                微信二维码尺寸200px * 200px,图片大小限制2MB,图片格式仅限jpeg,jpg,gif,png
+                            </div>
+                        </div>
+                        <table class="ui compact celled  table">
+                            <thead>
+                            <tr>
+                                <th>图片名称</th>
+                                <th>图片大小</th>
+                                <th>上传进度</th>
+                            </tr>
+                            </thead>
+                            <tbody id="weixin_tbody">
+                            <tr >
+                                <td></td>
+                                <td></td>
+                                <td>0 %</td>
+                            </tr>
+                            </tbody>
+                            <tfoot class="full-width">
+                            <tr>
+                                <th colspan="4">
+                                    <div id="weixinFiles" class="ui icon button orange">
+                                        选择二维码
+                                    </div>
+                                    <div id="weixinUploadFiles" class="ui icon button green">
+                                        <i class="cloud upload icon"></i> 开始上传
+                                    </div>
+                                </th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                微博
+            </td>
+            <td><input type="text" id="weibo" name="weibo" placeholder="请输入微博地址"></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="2">
+                <button class="ui green button" onclick="add()"><i class="checkmark icon"></i> 添加</button>
+            </th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<script type="text/javascript">
+    //老师头像上传
+    var uploader = new plupload.Uploader({
+        runtimes: 'html5,flash,silverlight,html4',
+        browse_button: 'avatarFiles', // you can pass an id...
+        container: document.getElementById('avatar_container'), // ... or DOM Element itself
+        url: '/upload/teacher_avatar',
+        flash_swf_url: '/assets/library/Moxie.swf',
+        silverlight_xap_url: '/assets/library/Moxie.xap',
+        multi_selection:false,//是否可以在文件浏览对话框中选择多个文件，true为可以，false为不可以。默认true，即可以选择多个文件。
+        filters: {
+            max_file_size: '2mb',//max 2mb
+            mime_types: [
+                {title: "Image files", extensions: "jpeg,jpg,gif,png"}
+//                , {title: "Zip files", extensions: "zip"}
+            ]
+        },
+        init: {
+            PostInit: function () {
+                document.getElementById('avatarUploadFiles').onclick = function() {
+                    uploader.start();
+                    return false;
+                };
+            },
+
+            FilesAdded: function (up, files) {
+                plupload.each(files, function (file) {
+                    $("#avatar_tbody").html("<tr><td>"+file.name+"</td><td>"+plupload.formatSize(file.size)+"</td><td>"+file.percent+"%</td></tr>");
+                });
+
+                //组件添加文件事件中，删除之前已添加的文件
+                $.each(up.files, function (i, file) {
+                    if (up.files.length <= 1) {
+                        return;
+                    }
+                    up.removeFile(file);
+                });
+            },
+
+            UploadProgress: function (up, file) {
+                $("#avatar_tbody").html("<tr><td>"+file.name+"</td><td>"+plupload.formatSize(file.size)+"</td><td>"+file.percent+"%</td></tr>");
+            },
+            FileUploaded:function(up,file,result){
+                if(result.response != null){
+                    var json = eval("(" + result.response + ")");
+                    if(json.code === 200){
+                        $('#img_avatar').attr('src','/upload/teacher/'+json.data.avatar);
+                        $('#avatar').val('/teacher/'+json.data.avatar);
+                    }
+                }
+            },
+            Error: function (up, err) {
+                console.log('upload fail');
+            }
+        }
+    });
+    uploader.init();
+
+    //微信二维码上传
+    var uploader_weixin = new plupload.Uploader({
+        runtimes: 'html5,flash,silverlight,html4',
+        browse_button: 'weixinFiles', // you can pass an id...
+        container: document.getElementById('weixin_container'), // ... or DOM Element itself
+        url: '/upload/weixin',
+        flash_swf_url: '/assets/library/Moxie.swf',
+        silverlight_xap_url: '/assets/library/Moxie.xap',
+        multi_selection:false,//是否可以在文件浏览对话框中选择多个文件，true为可以，false为不可以。默认true，即可以选择多个文件。
+        filters: {
+            max_file_size: '2mb',//max 2mb
+            mime_types: [
+                {title: "Image files", extensions: "jpeg,jpg,gif,png"}
+//                , {title: "Zip files", extensions: "zip"}
+            ]
+        },
+        init: {
+            PostInit: function () {
+                document.getElementById('weixinUploadFiles').onclick = function() {
+                    uploader_weixin.start();
+                    return false;
+                };
+            },
+
+            FilesAdded: function (up, files) {
+                plupload.each(files, function (file) {
+                    $("#weixin_tbody").html("<tr><td>"+file.name+"</td><td>"+plupload.formatSize(file.size)+"</td><td>"+file.percent+"%</td></tr>");
+                });
+
+                //组件添加文件事件中，删除之前已添加的文件
+                $.each(up.files, function (i, file) {
+                    if (up.files.length <= 1) {
+                        return;
+                    }
+                    up.removeFile(file);
+                });
+            },
+
+            UploadProgress: function (up, file) {
+                $("#weixin_tbody").html("<tr><td>"+file.name+"</td><td>"+plupload.formatSize(file.size)+"</td><td>"+file.percent+"%</td></tr>");
+            },
+            FileUploaded:function(up,file,result){
+                if(result.response != null){
+                    var json = eval("(" + result.response + ")");
+                    if(json.code === 200){
+                        $('#img_weixin').attr('src','/upload/weixin/'+json.data.weixin);
+                        $('#weixin').val('/weixin/'+json.data.weixin);
+                    }
+                }
+            },
+            Error: function (up, err) {
+                console.log('upload fail');
+            }
+        }
+    });
+    uploader_weixin.init();
+
+    /**************添加老师*************/
+    function  add() {
+        //TODO 需要添加验证
+        var name = $("#name").val();
+        var qualifications = $("#qualifications").val();
+        var desc  = $("#desc").val();
+        var avatar  = $("#avatar").val();
+        var weixin  = $("#weixin").val();
+        var weibo  = $("#weibo").val();
+
+        $.ajax({
+            url: '/admin/teacher/addTeacher',
+            type: 'POST',
+            data: {
+                name:name,
+                qualifications:qualifications,
+                desc:desc,
+                avatar:avatar,
+                weixin:weixin,
+                weibo:weibo
+            },
+            dataType: 'json',
+            timeout: 1000,
+            error: function () {
+                console.log('add error.')
+            },
+            success: function (data) {
+                if (data.code === 200) {
+                    //刷新
+                    location.href = '/admin/teacher';
+                }
+                // console.log(data);
+            }
+        });
+    }
+</script>
+</@layout>

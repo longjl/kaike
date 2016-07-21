@@ -6,5 +6,5 @@ package com.kaike.common;
  */
 public class AppConstants {
 
-    public static final int PAGESIZE = 20;
+    public static final int PAGE_SIZE = 10;
 }

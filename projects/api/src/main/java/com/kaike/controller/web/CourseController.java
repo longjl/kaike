@@ -1,4 +1,4 @@
-package com.kaike.controller;
+package com.kaike.controller.web;
 
 import com.kaike.common.AppConstants;
 import com.kaike.common.Message;
@@ -26,7 +26,7 @@ public class CourseController extends Controller {
     @Before(GET.class)
     public void page() {
         int pageNumber = getParaToInt("pageNumber");
-        Page<Course> page = Course.dao.paginate(pageNumber, AppConstants.PAGESIZE, "select id,title", "from course");
+        Page<Course> page = Course.dao.paginate(pageNumber, AppConstants.PAGE_SIZE, "select id,title", "from course");
         Map<String, Object> data = new HashMap<>();
         data.put("data", page);
         Message message = new Message(HttpStatus.SC_OK, "success", data);

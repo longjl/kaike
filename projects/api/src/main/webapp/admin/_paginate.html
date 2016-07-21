@@ -1,0 +1,61 @@
+<#macro paginate currentPage totalPage actionUrl urlParas="">
+    <#if (totalPage <= 0) || (currentPage > totalPage)><#return></#if>
+    <#local startPage = currentPage - 4>
+        <#if (startPage < 1)><#local startPage = 1></#if>
+
+        <#local endPage = currentPage + 4>
+            <#if (endPage > totalPage)><#local endPage = totalPage></#if>
+
+            <div class="ui left floated pagination menu">
+                <#if (currentPage <= 8)>
+                <#local startPage = 1>
+                    </#if>
+                    <#if ((totalPage - currentPage) < 8)>
+                    <#local endPage = totalPage>
+                        </#if>
+
+                        <#if (currentPage == 1)>
+                            <a class="icon item disabled">
+                                <i class="left chevron icon"></i>
+                            </a>
+                            <#else>
+                                <a class="icon item" href="${actionUrl}#{currentPage - 1}${urlParas!}">
+                                    <i class="left chevron icon"></i>
+                                </a>
+                        </#if>
+
+                        <#if (currentPage > 8)>
+                            <a class="item" href="${actionUrl}#{1}${urlParas!}">#{1}</a>
+                            <a class="item" href="${actionUrl}#{2}${urlParas!}">#{2}</a>
+                            <a class="icon item disabled">
+                                <i class="ellipsis horizontal icon"></i>
+                            </a>
+                        </#if>
+
+                        <#list startPage..endPage as i>
+                            <#if currentPage == i>
+                                <a class="icon item disabled">
+                                    #{i}
+                                </a>
+                                <#else>
+                                    <a class="item" href="${actionUrl}#{i}${urlParas!}">#{i}</a>
+                            </#if>
+                        </#list>
+
+                        <#if ((totalPage - currentPage) >= 8)>
+                            <a class="icon item disabled">
+                                <i class="ellipsis horizontal icon"></i>
+                            </a>
+                            <a class="item" href="${actionUrl}#{totalPage - 1}${urlParas!}">#{totalPage - 1}</a>
+                            <a class="item" href="${actionUrl}#{totalPage}${urlParas!}">#{totalPage}</a>
+                        </#if>
+
+                        <#if (currentPage == totalPage)>
+                            <a class="icon item disabled">
+                                <i class="right chevron icon"></i>
+                            </a>
+                            <#else>
+                                <a class="item" href="${actionUrl}#{currentPage + 1}${urlParas!}">  <i class="right chevron icon"></i></a>
+                        </#if>
+            </div>
+</#macro>

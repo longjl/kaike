@@ -1,4 +1,4 @@
-package com.kaike.controller;
+package com.kaike.controller.web;
 
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;

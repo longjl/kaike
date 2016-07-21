@@ -38,13 +38,13 @@ function handleSubject() {
     if (id == '' || id.trim().length == 0) {
         url = '/admin/subject/add';
         data = {
-            name : name
+            name: name
         };
-    }else{
+    } else {
         url = '/admin/subject/edit';
         data = {
-            id : id,
-            name : name
+            id: id,
+            name: name
         };
     }
     $.ajax({
@@ -76,7 +76,7 @@ function deleteSubject() {
     $.ajax({
         url: '/admin/subject/delete',
         type: 'GET',
-        data: {id:id},
+        data: {id: id},
         dataType: 'json',
         timeout: 1000,
         error: function () {
@@ -125,13 +125,13 @@ function handleGrade() {
     if (id == '' || id.trim().length == 0) {
         url = '/admin/grade/add';
         data = {
-            name : name
+            name: name
         };
-    }else{
+    } else {
         url = '/admin/grade/edit';
         data = {
-            id : id,
-            name : name
+            id: id,
+            name: name
         };
     }
     $.ajax({
@@ -163,7 +163,7 @@ function deleteGrade() {
     $.ajax({
         url: '/admin/grade/delete',
         type: 'GET',
-        data: {id:id},
+        data: {id: id},
         dataType: 'json',
         timeout: 1000,
         error: function () {
@@ -178,6 +178,9 @@ function deleteGrade() {
         }
     });
 }
+
+
+
 
 
 

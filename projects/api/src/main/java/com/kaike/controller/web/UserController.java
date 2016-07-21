@@ -1,4 +1,4 @@
-package com.kaike.controller;
+package com.kaike.controller.web;
 
 import com.kaike.common.Message;
 import com.kaike.intercept.TokenIntercept;
