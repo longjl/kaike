@@ -1,0 +1,337 @@
+<#include "/admin/_layout.html"/>
+<@layout>
+
+<#include "/admin/_header.html"/>
+<div class="ui container course-main">
+    <div class="ui breadcrumb" style="padding-bottom: 30px;">
+        <a class="section" href="/admin">首页</a>
+        <i class="right angle icon divider"></i>
+        <a class="section" href="/admin/course">课程</a>
+        <i class="right angle icon divider"></i>
+        <div class="active section">添加</div>
+    </div>
+
+    <table class="ui celled striped table form">
+        <thead>
+        <tr>
+            <th colspan="2">
+                添加课程
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="collapsing">
+                课程标题
+            </td>
+            <td><input type="text" id="title" name="title" placeholder="请输入课程标题 (必填)"></td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                课程类型
+            </td>
+            <td>
+                <div class="inline fields">
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="type" value="free" checked="checked" tabindex="0" class="hidden">
+                            <label>免费</label>
+                        </div>
+                    </div>
+                    <div class="field inline">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="type" value="vip" tabindex="0" class="hidden">
+                            <label>VIP</label>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                课程介绍
+            </td>
+            <td>
+                <div class="field">
+                    <textarea id="desc" name="desc" placeholder="请输入课程介绍 (选填)"></textarea>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                课程封面
+            </td>
+            <td>
+                <div class="inline fields">
+                    <div class="field">
+                        <img id="img_cover" class="ui medium bordered image"
+                             src="/assets/images/wireframe/white-image.png">
+                        <input type="text" id="cover" name="cover" style="display: none;">
+                    </div>
+                    <div class="field" id="cover_container">
+                        <div class="ui ignored warning icon message" style="display: block;">
+                            <div class="content">
+                                头像尺寸650px * 650px,图片大小限制5MB,图片格式仅限jpeg,jpg,gif,png
+                            </div>
+                        </div>
+                        <table class="ui compact celled  table">
+                            <thead>
+                            <tr>
+                                <th>图片名称</th>
+                                <th>图片大小</th>
+                                <th>上传进度</th>
+                            </tr>
+                            </thead>
+                            <tbody id="cover_tbody">
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>0 %</td>
+                            </tr>
+                            </tbody>
+                            <tfoot class="full-width">
+                            <tr>
+                                <th colspan="4">
+                                    <div id="coverFiles" class="ui icon button orange">
+                                        选择上传课程封面
+                                    </div>
+                                    <div id="coverUploadFiles" class="ui icon button green">
+                                        <i class="cloud upload icon"></i> 开始上传
+                                    </div>
+                                </th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                讲课老师
+            </td>
+            <td>
+                <div class="ui fluid multiple search selection dropdown" id="teacher_dropdown">
+                    <input name="teacher_id" id="teacher_id" type="hidden">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">选择老师</div>
+                    <div class="menu">
+                        <#list teachers as teacher>
+                            <div class="item" data-value="${teacher.id}">${teacher.name}</div>
+                        </#list>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="collapsing">
+                科目
+            </td>
+            <td>
+                <div class="ui fluid multiple search selection dropdown" id="subject_dropdown">
+                    <input name="subject_id" id="subject_id" type="hidden">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">选择科目</div>
+                    <div class="menu">
+                        <#list subjects as subject>
+                            <div class="item" data-value="${subject.id}">${subject.name}</div>
+                        </#list>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                年级
+            </td>
+            <td>
+                <div class="ui fluid multiple search selection dropdown" id="grade_dropdown">
+                    <input name="grade_id" id="grade_id" type="hidden">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">选择年级</div>
+                    <div class="menu">
+                        <#list grades as grade>
+                            <div class="item" data-value="${grade.id}">${grade.name}</div>
+                        </#list>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                课节数
+            </td>
+            <td><input type="number" id="lesson_number" name="lesson_number"
+                       placeholder="请输入课节数 必填"></td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                排序
+            </td>
+            <td><input type="number" id="sort" name="sort"
+                       placeholder="请输入排序 (1 , 2 , 3 ...) 必填"></td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                状态
+            </td>
+            <td>
+                <div class="inline fields">
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="status" checked="checked" value="true" tabindex="0"
+                                   class="hidden">
+                            <label>上架</label>
+                        </div>
+                    </div>
+                    <div class="field inline">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="status" tabindex="0" value="false" class="hidden">
+                            <label>下架</label>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="2">
+                <button class="ui green button" onclick="add()"><i class="checkmark icon"></i> 添加</button>
+            </th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<script type="text/javascript">
+    $('.ui.radio.checkbox').checkbox();
+    $('#teacher_dropdown')
+            .dropdown({
+                maxSelections: 1,
+                message: {
+                    maxSelections: '只能选择一个老师',
+                    noResults: '没有找到相关结果'
+                }
+            });
+
+    $('#subject_dropdown')
+            .dropdown({
+                maxSelections: 1,
+                message: {
+                    maxSelections: '只能选择一个科目',
+                    noResults: '没有找到相关结果'
+                }
+            });
+
+    $('#grade_dropdown')
+            .dropdown({
+                maxSelections: 1,
+                message: {
+                    maxSelections: '只能选择一个年级',
+                    noResults: '没有找到相关结果'
+                }
+            });
+
+
+    //老师头像上传
+    var uploader = new plupload.Uploader({
+        runtimes: 'html5,flash,silverlight,html4',
+        browse_button: 'coverFiles', // you can pass an id...
+        container: document.getElementById('cover_container'), // ... or DOM Element itself
+        url: '/upload/course',
+        flash_swf_url: '/assets/library/Moxie.swf',
+        silverlight_xap_url: '/assets/library/Moxie.xap',
+        multi_selection: false,//是否可以在文件浏览对话框中选择多个文件，true为可以，false为不可以。默认true，即可以选择多个文件。
+        filters: {
+            max_file_size: '2mb',//max 2mb
+            mime_types: [
+                {title: "Image files", extensions: "jpeg,jpg,gif,png"}
+//                , {title: "Zip files", extensions: "zip"}
+            ]
+        },
+        init: {
+            PostInit: function () {
+                document.getElementById('coverUploadFiles').onclick = function () {
+                    uploader.start();
+                    return false;
+                };
+            },
+
+            FilesAdded: function (up, files) {
+                plupload.each(files, function (file) {
+                    $("#cover_tbody").html("<tr><td>" + file.name + "</td><td>" + plupload.formatSize(file.size) + "</td><td>" + file.percent + "%</td></tr>");
+                });
+
+                //组件添加文件事件中，删除之前已添加的文件
+                $.each(up.files, function (i, file) {
+                    if (up.files.length <= 1) {
+                        return;
+                    }
+                    up.removeFile(file);
+                });
+            },
+
+            UploadProgress: function (up, file) {
+                $("#cover_tbody").html("<tr><td>" + file.name + "</td><td>" + plupload.formatSize(file.size) + "</td><td>" + file.percent + "%</td></tr>");
+            },
+            FileUploaded: function (up, file, result) {
+                if (result.response != null) {
+                    var json = eval("(" + result.response + ")");
+                    if (json.code === 200) {
+                        $('#img_cover').attr('src', '/upload/course/' + json.data.cover);
+                        $('#cover').val('/course/' + json.data.cover);
+                    }
+                }
+            },
+            Error: function (up, err) {
+                console.log('upload fail');
+            }
+        }
+    });
+    uploader.init();
+
+
+    /**************添加课程*************/
+    function add() {
+        //TODO 需要添加验证
+        var title = $("#title").val();
+        var type = $('input[name="type"]:checked ').val();
+        var desc = $("#desc").val();
+        var cover = $("#cover").val();
+        var teacher_id = $("#teacher_id").val();
+        var subject_id = $("#subject_id").val();
+        var grade_id = $("#grade_id").val();
+        var lesson_number = $("#lesson_number").val();
+        var sort = $("#sort").val();
+        var status = $('input[name="status"]:checked ').val();
+
+        $.ajax({
+            url: '/admin/course/addCourse',
+            type: 'POST',
+            data: {
+                title: title,
+                type: type,
+                desc: desc,
+                cover: cover,
+                teacher_id: teacher_id,
+                subject_id: subject_id,
+                grade_id: grade_id,
+                lesson_number: lesson_number,
+                sort: sort,
+                status: status
+            },
+            dataType: 'json',
+            timeout: 1000,
+            error: function () {
+                console.log('add error.')
+            },
+            success: function (data) {
+                if (data.code === 200) {
+                    location.href = '/admin/course';
+                }
+            }
+        });
+    }
+</script>
+</@layout>

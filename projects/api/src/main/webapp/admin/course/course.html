@@ -6,25 +6,17 @@
 
 <div class="ui container course-main">
     <div class="ui breadcrumb" style="padding-bottom: 30px;">
-        <a class="section">首页</a>
+        <a class="section" href="/admin">首页</a>
         <i class="right angle icon divider"></i>
         <div class="active section">课程</div>
     </div>
 
     <div class="container ui">
-        <button class="ui labeled icon button green"><i class="plus icon"></i> 添加</button>
-        <button class="ui labeled icon button orange"><i class="right edit icon"></i> 编辑</button>
-        <button class="ui labeled icon button red"><i class="right remove icon"></i> 删除</button>
+        <a class="ui labeled icon button green" href="/admin/course/add"><i class="plus icon"></i> 添加</a>
     </div>
     <table class="ui celled table">
         <thead>
         <tr>
-            <th>
-                <div class="ui checkbox">
-                    <input type="checkbox" tabindex="0" class="hidden">
-                    <label>全选</label>
-                </div>
-            </th>
             <th>序号</th>
             <th>标题</th>
             <th>类型</th>
@@ -34,77 +26,47 @@
             <th>状态</th>
             <th>课节数</th>
             <th>创建时间</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>
-                <div class="ui checkbox">
-                    <input type="checkbox" tabindex="0" class="hidden">
-                    <label></label>
-                </div>
-            </td>
-            <td>1</td>
-            <td>2016年数学经典试题讲解</td>
-            <td >VIP</td>
-            <td>杨再兴</td>
-            <td>数学</td>
-            <td>高二</td>
-            <td>上架</td>
-            <td>20</td>
-            <td>2016-07-09</td>
-        </tr>
-        <tr class="positive">
-            <td>
-                <div class="ui checkbox">
-                    <input type="checkbox" tabindex="0" class="hidden">
-                    <label></label>
-                </div>
-            </td>
-            <td>1</td>
-            <td>2016年数学经典试题讲解</td>
-            <td >VIP</td>
-            <td>杨再兴</td>
-            <td>数学</td>
-            <td>高二</td>
-            <td>上架</td>
-            <td>20</td>
-            <td>2016-07-09</td>
-        </tr>
-        <tr>
-            <td>
-                <div class="ui checkbox">
-                    <input type="checkbox" tabindex="0" class="hidden">
-                    <label></label>
-                </div>
-            </td>
-            <td>1</td>
-            <td>2016年数学经典试题讲解</td>
-            <td >VIP</td>
-            <td>杨再兴</td>
-            <td>数学</td>
-            <td>高二</td>
-            <td>上架</td>
-            <td>20</td>
-            <td>2016-07-09</td>
-        </tr>
-        <tr class="positive">
-            <td>
-                <div class="ui checkbox">
-                    <input type="checkbox" tabindex="0" class="hidden">
-                    <label></label>
-                </div>
-            </td>
-            <td>1</td>
-            <td>2016年数学经典试题讲解</td>
-            <td >VIP</td>
-            <td>杨再兴</td>
-            <td>数学</td>
-            <td>高二</td>
-            <td>上架</td>
-            <td>20</td>
-            <td>2016-07-09</td>
-        </tr>
+        <#list coursePage.getList() as course>
+            <tr>
+                <td>${course_index + 1}</td>
+                <td>${course.title}</td>
+                <td>
+                    <#if (course.type == 'free')>
+                            免费
+                    </#if>
+                    <#if (course.type == 'vip')>
+                        VIP
+                    </#if>
+                </td>
+                <td>${course.teacherName}</td>
+                <td>${course.subjectName}</td>
+                <td>${course.gradeName}</td>
+                <td>
+                    <#if (course.status == 'true')>
+                        上架
+                    </#if>
+                    <#if (course.status == 'false')>
+                        下架
+                    </#if>
+                </td>
+                <td>${course.lesson_number}</td>
+                <td> ${course.create_at?string("yyyy-MM-dd")}  </td>
+                <td>
+                    <a class="ui label orange" href="/admin/course/edit/${course.id}">
+                        <i class="edit icon"></i>
+                        编辑
+                    </a>
+                    <a class="ui label red" onclick="deleteTeacherModal('${course.id}')">
+                        <i class="remove icon"></i>
+                        删除
+                    </a>
+                </td>
+            </tr>
+        </#list>
         </tbody>
         <tfoot>
         <tr>

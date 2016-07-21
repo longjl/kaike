@@ -112,6 +112,7 @@ public class AppConfig extends JFinalConfig {
         arp.addMapping("grade",Grade.class);
         arp.addMapping("teacher", Teacher.class);
         arp.addMapping("vip_type",VipType.class);
+        arp.addMapping("course",Course.class);
     }
 
 }
