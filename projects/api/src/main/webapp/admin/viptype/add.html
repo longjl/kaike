@@ -1,0 +1,104 @@
+<#include "/admin/_layout.html"/>
+<@layout>
+
+<#include "/admin/_header.html"/>
+<div class="ui container course-main">
+    <div class="ui breadcrumb" style="padding-bottom: 30px;">
+        <a class="section" href="/admin">首页</a>
+        <i class="right angle icon divider"></i>
+        <a class="section" href="/admin/viptype">VIP类型</a>
+        <i class="right angle icon divider"></i>
+        <div class="active section">添加</div>
+    </div>
+
+    <table class="ui celled striped table form">
+        <thead>
+        <tr>
+            <th colspan="2">
+                添加VIP类型
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="collapsing">
+                名称
+            </td>
+            <td><input type="text" id="name" name="name" placeholder="请输入VIP类型名称 必填"></td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                原价
+            </td>
+            <td><input type="number" id="original_price" name="original_price" placeholder="请输入原价 (如:1800) 必填"></td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                现价
+            </td>
+            <td>
+                <div class="field">
+                    <input type="number" id="current_price" name="current_price" placeholder="请输入现价 (如:1600) 必填">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                优惠价
+            </td>
+            <td>
+                <div class="field">
+                    <input type="number" id="concessionary_rate" name="concessionary_rate" placeholder="请输入优惠价 (如:200) 必填">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                月数
+            </td>
+            <td><input type="number" id="month" name="month" placeholder="请输入月数 必填"></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="2">
+                <button class="ui green button" onclick="add()"><i class="checkmark icon"></i> 添加</button>
+            </th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<script type="text/javascript">
+    /**************添加VIP类型*************/
+    function  add() {
+        //TODO 需要添加验证
+        var name = $("#name").val();
+        var original_price = $("#original_price").val();
+        var current_price  = $("#current_price").val();
+        var concessionary_rate  = $("#concessionary_rate").val();
+        var month  = $("#month").val();
+
+        $.ajax({
+            url: '/admin/viptype/addVipType',
+            type: 'POST',
+            data: {
+                name:name,
+                original_price:original_price,
+                current_price:current_price,
+                concessionary_rate:concessionary_rate,
+                month:month
+            },
+            dataType: 'json',
+            timeout: 1000,
+            error: function () {
+                console.log('add error.')
+            },
+            success: function (data) {
+                if (data.code === 200) {
+                    location.href = '/admin/viptype';
+                }
+            }
+        });
+    }
+</script>
+</@layout>

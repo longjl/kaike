@@ -55,4 +55,48 @@ public class TeacherController extends Controller {
         Message message = new Message(HttpStatus.SC_OK, "success", null);
         renderJson(message);
     }
+
+    //跳转编辑老师
+    @Before(GET.class)
+    public void edit() {
+        String id = getPara();
+        Teacher teacher = Teacher.dao.findById(id);
+        setAttr("teacher", teacher);
+        render("/admin/teacher/edit.html");
+    }
+
+    //编辑老师
+    @Before(POST.class)
+    public void editTeacher() {
+        String id = getPara("id");
+        String name = getPara("name");
+        String qualifications = getPara("qualifications");
+        String desc = getPara("desc");
+        String avatar = getPara("avatar");
+        String weixin = getPara("weixin");
+        String weibo = getPara("weibo");
+
+        Teacher teacher = Teacher.dao.findById(id);
+        if (teacher != null) {
+            teacher.set("id", id).set("name", name).set("qualifications", qualifications)
+                    .set("desc", desc).set("avatar", avatar).set("weixin", weixin)
+                    .set("weibo", weibo).update();
+        }
+        Message message = new Message(HttpStatus.SC_OK, "success", null);
+        renderJson(message);
+    }
+
+
+    //删除老师
+    @Before(GET.class)
+    public void deleteTeacher(){
+        String id = getPara("id");
+        Teacher teacher = Teacher.dao.findById(id);
+        if (teacher != null){
+            teacher.delete();
+        }
+        Message message = new Message(HttpStatus.SC_OK, "success", null);
+        renderJson(message);
+    }
+
 }

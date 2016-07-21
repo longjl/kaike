@@ -3,12 +3,8 @@ package com.kaike.common;
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.wall.WallFilter;
 import com.kaike.controller.UploadController;
-import com.kaike.controller.admin.AdminController;
+import com.kaike.controller.admin.*;
 import com.kaike.controller.web.UserController;
-import com.kaike.controller.admin.CourseController;
-import com.kaike.controller.admin.GradeController;
-import com.kaike.controller.admin.SubjectController;
-import com.kaike.controller.admin.TeacherController;
 import com.kaike.model.*;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -40,6 +36,8 @@ public class AppConfig extends JFinalConfig {
         me.add("/admin/subject", SubjectController.class);
         me.add("/admin/grade", GradeController.class);
         me.add("/admin/teacher", TeacherController.class);
+        me.add("/admin/viptype", VipTypeController.class);
+
         me.add("/upload", UploadController.class);
 
         //TODO 前台
@@ -113,6 +111,7 @@ public class AppConfig extends JFinalConfig {
         arp.addMapping("subject", Subject.class);
         arp.addMapping("grade",Grade.class);
         arp.addMapping("teacher", Teacher.class);
+        arp.addMapping("vip_type",VipType.class);
     }
 
 }

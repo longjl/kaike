@@ -10,7 +10,7 @@ public class AdminController extends Controller {
     public void index() {
         //TODO 需要判断是否已经登录
 
-        render("/admin/login.html");
+        render("/admin/index.html");
     }
 
 
