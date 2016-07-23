@@ -7,59 +7,39 @@
     <div class="ui breadcrumb" style="padding-bottom: 30px;">
         <a class="section" href="/admin">首页</a>
         <i class="right angle icon divider"></i>
-        <div class="active section">课程</div>
+        <div class="active section">课节</div>
     </div>
 
     <div class="container ui">
-        <a class="ui labeled icon button green" href="/admin/course/add"><i class="plus icon"></i> 添加</a>
+        <a class="ui labeled icon button green" href="/admin/lesson/add"><i class="plus icon"></i> 添加</a>
     </div>
     <table class="ui celled table">
         <thead>
         <tr>
             <th>序号</th>
-            <th>标题</th>
-            <th>类型</th>
-            <th>老师</th>
-            <th>科目</th>
-            <th>年级</th>
-            <th>状态</th>
-            <th>课节数</th>
+            <th>课节标题</th>
+            <th>时长</th>
+            <th>视频URL</th>
+            <th>排序</th>
             <th>创建时间</th>
             <th style="width:170px;">操作</th>
         </tr>
         </thead>
         <tbody>
-        <#list coursePage.getList() as course>
+        <#list lessonPage.getList() as lesson>
             <tr>
-                <td>${course_index + 1}</td>
-                <td>${course.title}</td>
+                <td>${lesson_index + 1}</td>
+                <td>${lesson.title}</td>
+                <td>${lesson.duration}</td>
+                <td>${lesson.video_url}</td>
+                <td>${lesson.sort}</td>
+                <td> ${lesson.create_at?string("yyyy-MM-dd")}  </td>
                 <td>
-                    <#if (course.type == 'free')>
-                            免费
-                    </#if>
-                    <#if (course.type == 'vip')>
-                        VIP
-                    </#if>
-                </td>
-                <td>${course.teacherName}</td>
-                <td>${course.subjectName}</td>
-                <td>${course.gradeName}</td>
-                <td>
-                    <#if (course.status == 'true')>
-                        上架
-                    </#if>
-                    <#if (course.status == 'false')>
-                        下架
-                    </#if>
-                </td>
-                <td>${course.lesson_number}</td>
-                <td> ${course.create_at?string("yyyy-MM-dd")}  </td>
-                <td>
-                    <a class="ui label orange" href="/admin/course/edit/${course.id}">
+                    <a class="ui label orange" href="/admin/lesson/edit/${lesson.id}">
                         <i class="edit icon"></i>
                         编辑
                     </a>
-                    <a class="ui label red" onclick="deleteModal('${course.id}')">
+                    <a class="ui label red" onclick="deleteModal('${lesson.id}')">
                         <i class="remove icon"></i>
                         删除
                     </a>
@@ -71,7 +51,7 @@
         <tr>
             <th colspan="10">
                 <#include "/admin/_paginate.html" />
-                <@paginate currentPage=coursePage.pageNumber totalPage=coursePage.totalPage actionUrl="/admin/course/" />
+                <@paginate currentPage=lessonPage.pageNumber totalPage=lessonPage.totalPage actionUrl="/admin/lesson/" />
             </th>
         </tr>
         </tfoot>
@@ -81,11 +61,11 @@
 <div class="ui modal" id="deleteModal">
     <i class="close icon"></i>
     <div class="header">
-        删除课程
+        删除课节
     </div>
     <div class="image content">
         <div class="description">
-            <div class="ui header"> 您确定要删除该课程吗?</div>
+            <div class="ui header"> 您确定要删除该课节吗?</div>
             <p>数据一旦删除将不可恢复, 请您慎重操作.</p>
         </div>
     </div>
@@ -93,28 +73,28 @@
         <div class="ui black deny button">
             取消
         </div>
-        <div class="ui positive right labeled icon button" onclick="deleteCourse()">
+        <div class="ui positive right labeled icon button" onclick="deleteLesson()">
             确定删除
             <i class="checkmark icon"></i>
         </div>
     </div>
-    <input type="hidden" id="course_id" value="">
+    <input type="hidden" id="lesson_id" value="">
 </div>
 <script type="text/javascript">
     //弹层
     function deleteModal(id) {
-        $('#course_id').val(id);
+        $('#lesson_id').val(id);
         $('#deleteModal').modal('show');
     }
 
     //删除
-    function deleteCourse() {
-        var id = $('#course_id').val();
+    function deleteLesson() {
+        var id = $('#lesson_id').val();
         if (id == '' || id.trim().length == 0) {
             return;
         }
         $.ajax({
-            url: '/admin/course/deleteCourse',
+            url: '/admin/lesson/deleteLesson',
             type: 'GET',
             data: {id: id},
             dataType: 'json',

@@ -37,6 +37,7 @@ public class AppConfig extends JFinalConfig {
         me.add("/admin/grade", GradeController.class);
         me.add("/admin/teacher", TeacherController.class);
         me.add("/admin/viptype", VipTypeController.class);
+        me.add("/admin/lesson", LessonController.class);
 
         me.add("/upload", UploadController.class);
 
@@ -109,10 +110,11 @@ public class AppConfig extends JFinalConfig {
     private void configModelMapping(ActiveRecordPlugin arp) {
         arp.addMapping("user", User.class);
         arp.addMapping("subject", Subject.class);
-        arp.addMapping("grade",Grade.class);
+        arp.addMapping("grade", Grade.class);
         arp.addMapping("teacher", Teacher.class);
-        arp.addMapping("vip_type",VipType.class);
-        arp.addMapping("course",Course.class);
+        arp.addMapping("vip_type", VipType.class);
+        arp.addMapping("course", Course.class);
+        arp.addMapping("lesson", Lesson.class);
     }
 
 }

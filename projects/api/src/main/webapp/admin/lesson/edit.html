@@ -1,0 +1,112 @@
+<#include "/admin/_layout.html"/>
+<@layout>
+
+<#include "/admin/_header.html"/>
+<div class="ui container course-main">
+    <div class="ui breadcrumb" style="padding-bottom: 30px;">
+        <a class="section" href="/admin">首页</a>
+        <i class="right angle icon divider"></i>
+        <a class="section" href="/admin/lesson">课节</a>
+        <i class="right angle icon divider"></i>
+        <div class="active section">编辑</div>
+    </div>
+
+    <table class="ui celled striped table form">
+        <thead>
+        <tr>
+            <th colspan="2">
+                编辑课节
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="collapsing">
+                课节标题
+            </td>
+            <td>
+                <input type="hidden" id="id" name="id" value="${lesson.id}">
+                <input type="text" id="title" name="title" value="${lesson.title}" placeholder="请输入课节标题 必填"></td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                时长
+            </td>
+            <td><input type="text" id="duration" name="duration" value="${lesson.duration}" placeholder="请输入课节时长 (如:53:09) 必填"></td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                课节介绍
+            </td>
+            <td>
+                <div class="field">
+                    <textarea id="desc" name="desc" placeholder="请输入课节介绍 (选填)">${lesson.desc}</textarea>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                视频URL
+            </td>
+            <td>
+                <div class="field">
+                    <input type="text" id="video_url" name="video_url" value="${lesson.video_url}" placeholder="请输入视频URL 必填">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                排序
+            </td>
+            <td>
+                <div class="field">
+                    <input type="number" id="sort" name="sort" value="${lesson.sort}" placeholder="请输入排序 必填">
+                </div>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="2">
+                <button class="ui green button" onclick="edit()"><i class="checkmark icon"></i> 保存</button>
+            </th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<script type="text/javascript">
+    /**************编辑课节*************/
+    function  edit() {
+        //TODO 需要添加验证
+        var id = $("#id").val();
+        var title = $("#title").val();
+        var duration = $("#duration").val();
+        var desc  = $("#desc").val();
+        var video_url  = $("#video_url").val();
+        var sort  = $("#sort").val();
+
+        $.ajax({
+            url: '/admin/lesson/editLesson',
+            type: 'POST',
+            data: {
+                id:id,
+                title:title,
+                duration:duration,
+                desc:desc,
+                video_url:video_url,
+                sort:sort
+            },
+            dataType: 'json',
+            timeout: 1000,
+            error: function () {
+                console.log('edit error.')
+            },
+            success: function (data) {
+                if (data.code === 200) {
+                    location.href = '/admin/lesson';
+                }
+            }
+        });
+    }
+</script>
+</@layout>
