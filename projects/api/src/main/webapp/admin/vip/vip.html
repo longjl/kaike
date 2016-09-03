@@ -1,0 +1,111 @@
+<#include "/admin/_layout.html"/>
+<@layout>
+
+<#include "/admin/_header.html"/>
+
+<div class="ui container course-main">
+    <div class="ui breadcrumb" style="padding-bottom: 30px;">
+        <a class="section" href="/admin">首页</a>
+        <i class="right angle icon divider"></i>
+        <div class="active section">VIP</div>
+    </div>
+
+    <div class="container ui">
+        <a class="ui labeled icon button green" href="/admin/vip/add"><i class="plus icon"></i> 添加</a>
+    </div>
+    <table class="ui celled table">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>会员名字</th>
+            <th>有效期</th>
+            <th>创建时间</th>
+            <th style="width:170px;">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <#list vipPage.getList() as vip>
+            <tr>
+                <td>${vip_index + 1}</td>
+                <td>${vip.name}</td>
+                <td>${vip.expiry_date?string("yyyy-MM-dd")} </td>
+                <td>${vip.create_at?string("yyyy-MM-dd")}  </td>
+                <td>
+                    <a class="ui label orange" href="/admin/user/edit/${vip.id}">
+                        <i class="edit icon"></i>
+                        编辑
+                    </a>
+                    <a class="ui label red" onclick="deleteModal('${vip.id}')">
+                        <i class="remove icon"></i>
+                        删除
+                    </a>
+                </td>
+            </tr>
+        </#list>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="10">
+                <#include "/admin/_paginate.html" />
+                <@paginate currentPage=vipPage.pageNumber totalPage=vipPage.totalPage actionUrl="/admin/vip/" />
+            </th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<!--删除-->
+<div class="ui modal" id="deleteModal">
+    <i class="close icon"></i>
+    <div class="header">
+        删除课节
+    </div>
+    <div class="image content">
+        <div class="description">
+            <div class="ui header"> 您确定要删除该课节吗?</div>
+            <p>数据一旦删除将不可恢复, 请您慎重操作.</p>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            取消
+        </div>
+        <div class="ui positive right labeled icon button" onclick="deleteLesson()">
+            确定删除
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+    <input type="hidden" id="lesson_id" value="">
+</div>
+<script type="text/javascript">
+    //弹层
+    function deleteModal(id) {
+        $('#lesson_id').val(id);
+        $('#deleteModal').modal('show');
+    }
+
+    //删除
+    function deleteLesson() {
+        var id = $('#lesson_id').val();
+        if (id == '' || id.trim().length == 0) {
+            return;
+        }
+        $.ajax({
+            url: '/admin/lesson/deleteLesson',
+            type: 'GET',
+            data: {id: id},
+            dataType: 'json',
+            timeout: 1000,
+            error: function () {
+                console.log('handle error.')
+            },
+            success: function (data) {
+                if (data.code === 200) {
+                    $('#deleteModal').modal('hide');
+                    //刷新
+                    location.reload();
+                }
+            }
+        });
+    }
+</script>
+</@layout>

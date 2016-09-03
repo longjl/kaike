@@ -38,7 +38,8 @@ public class AppConfig extends JFinalConfig {
         me.add("/admin/teacher", TeacherController.class);
         me.add("/admin/viptype", VipTypeController.class);
         me.add("/admin/lesson", LessonController.class);
-
+        me.add("/admin/user", com.kaike.controller.admin.UserController.class);
+        me.add("/admin/vip",VipController.class);
         me.add("/upload", UploadController.class);
 
         //TODO 前台
@@ -115,6 +116,7 @@ public class AppConfig extends JFinalConfig {
         arp.addMapping("vip_type", VipType.class);
         arp.addMapping("course", Course.class);
         arp.addMapping("lesson", Lesson.class);
+        arp.addMapping("vip",Vip.class);
     }
 
 }

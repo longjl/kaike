@@ -9,7 +9,6 @@ import com.jfinal.plugin.activerecord.Page;
 import com.kaike.common.AppConstants;
 import com.kaike.common.Message;
 import com.kaike.model.Lesson;
-import com.kaike.model.Teacher;
 import org.apache.commons.httpclient.HttpStatus;
 
 import java.util.Date;

@@ -1,0 +1,102 @@
+<#include "/admin/_layout.html"/>
+<@layout>
+
+<#include "/admin/_header.html"/>
+<div class="ui container course-main">
+    <div class="ui breadcrumb" style="padding-bottom: 30px;">
+        <a class="section" href="/admin">首页</a>
+        <i class="right angle icon divider"></i>
+        <a class="section" href="/admin/vip">VIP</a>
+        <i class="right angle icon divider"></i>
+        <div class="active section">添加</div>
+    </div>
+
+    <table class="ui celled striped table form">
+        <thead>
+        <tr>
+            <th colspan="2">
+                添加VIP
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="collapsing">
+                选择会员
+            </td>
+            <td>
+                <div class="ui fluid multiple search selection dropdown" id="user_dropdown">
+                    <input name="user_id" id="user_id" type="hidden">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">选择会员</div>
+                    <div class="menu">
+                        <#list users as user>
+                            <div class="item" data-value="${user.id}">${user.name}</div>
+                        </#list>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="collapsing">
+                有效期
+            </td>
+            <td><input type="text" id="qualifications" name="qualifications" placeholder="请输入老师资历 (如: 北京大学法学院博士,8年辅导经验) 必填"></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="2">
+                <button class="ui green button" onclick="add()"><i class="checkmark icon"></i> 添加</button>
+            </th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<script type="text/javascript">
+
+    $('#user_dropdown')
+            .dropdown({
+                maxSelections: 1,
+                message: {
+                    maxSelections: '只能选择一个老师',
+                    noResults: '没有找到相关结果'
+                }
+            });
+    /**************添加老师*************/
+    function  add() {
+        //TODO 需要添加验证
+        var name = $("#name").val();
+        var qualifications = $("#qualifications").val();
+        var desc  = $("#desc").val();
+        var avatar  = $("#avatar").val();
+        var weixin  = $("#weixin").val();
+        var weibo  = $("#weibo").val();
+
+        $.ajax({
+            url: '/admin/teacher/addTeacher',
+            type: 'POST',
+            data: {
+                name:name,
+                qualifications:qualifications,
+                desc:desc,
+                avatar:avatar,
+                weixin:weixin,
+                weibo:weibo
+            },
+            dataType: 'json',
+            timeout: 1000,
+            error: function () {
+                console.log('add error.')
+            },
+            success: function (data) {
+                if (data.code === 200) {
+                    //刷新
+                    location.href = '/admin/teacher';
+                }
+                // console.log(data);
+            }
+        });
+    }
+</script>
+</@layout>

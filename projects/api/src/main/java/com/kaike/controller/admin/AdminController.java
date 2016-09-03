@@ -9,7 +9,7 @@ public class AdminController extends Controller {
     //将后台的默认访问作为登录入口
     public void index() {
         //TODO 需要判断是否已经登录
-
+        getPara();
         render("/admin/index.html");
     }
 
